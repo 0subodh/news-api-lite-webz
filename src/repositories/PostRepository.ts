@@ -15,6 +15,7 @@ export class PostRepository implements IPostRepository {
     try {
       logger.info("Creating database tables if they don't exist");
 
+      // Create posts table
       await client.query(`
         CREATE TABLE IF NOT EXISTS posts (
           id SERIAL PRIMARY KEY,
@@ -37,6 +38,7 @@ export class PostRepository implements IPostRepository {
         )
       `);
 
+      // Create thread table
       await client.query(`
         CREATE TABLE IF NOT EXISTS threads (
           id SERIAL PRIMARY KEY,
@@ -57,6 +59,7 @@ export class PostRepository implements IPostRepository {
         )
       `);
 
+      // Create categories table
       await client.query(`
         CREATE TABLE IF NOT EXISTS categories (
           id SERIAL PRIMARY KEY,
@@ -66,6 +69,7 @@ export class PostRepository implements IPostRepository {
         )
       `);
 
+      // Create entities table
       await client.query(`
         CREATE TABLE IF NOT EXISTS entities (
           id SERIAL PRIMARY KEY,
@@ -106,6 +110,7 @@ export class PostRepository implements IPostRepository {
           continue;
         }
         
+        // Insert post
         await client.query(
           `INSERT INTO posts (
             uuid, url, author, published, title, text, language, 
@@ -131,6 +136,7 @@ export class PostRepository implements IPostRepository {
           ]
         );
         
+        // Insert thread
         if (post.thread) {
           await client.query(
             `INSERT INTO threads (
@@ -156,6 +162,7 @@ export class PostRepository implements IPostRepository {
           );
         }
         
+        // Insert categories
         if (post.categories && post.categories.length > 0) {
           for (const category of post.categories) {
             await client.query(
@@ -165,6 +172,7 @@ export class PostRepository implements IPostRepository {
           }
         }
         
+        // Insert entities
         if (post.entities) {
           if (post.entities.persons && post.entities.persons.length > 0) {
             for (const person of post.entities.persons) {

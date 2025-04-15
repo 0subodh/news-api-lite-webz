@@ -2,11 +2,11 @@ services:
   postgres:
     image: postgres:17-alpine
     ports:
-      - "5432:5432"
+      - "5433:5433"
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: webz_data
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -18,13 +18,13 @@ services:
   app:
     build: .
     environment:
-      - DB_HOST:${DB_HOST}
-      - DB_PORT:${DB_PORT}
-      - DB_NAME:{DB_NAME}
-      - DB_USER:{DB_USER}
-      - DB_PASSWORD:${DB_PASSWORD}
-      - WEBZ_API_TOKEN:${WEBZ_API_TOKEN}
-      - WEBZ_API_BASE_URL:${WEBZ_API_BASE_URL}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=webz_data
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - WEBZ_API_TOKEN=20756445-dcfa-42f8-a9e5-5a28e06eaffb
+      - WEBZ_API_BASE_URL=https://api.webz.io
     depends_on:
       postgres:
         condition: service_healthy
