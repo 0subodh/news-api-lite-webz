@@ -1,6 +1,6 @@
 import { Pool, PoolConfig } from "pg";
 import { config } from "../config/config";
-import logger from "@/utils/logger";
+import logger from "../utils/logger";
 
 const dbConfig: PoolConfig = {
   user: config.database.username || "postgres",
