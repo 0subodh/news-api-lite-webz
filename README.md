@@ -56,4 +56,9 @@ The application will:
 4. Continue fetching additional pages of results until all available articles are retrieved
 5. Output the count of retrieved articles and the total available
 
-## Possible Improvements
+## Possible Improvements/ TODO
+
+1. Split Classes by Responsibility
+2. Implemnt proper Retry Logic with Backoff for 429 Error
+3. Implement cron for periodic running
+4. May improve Database Schema to include metadata Information
